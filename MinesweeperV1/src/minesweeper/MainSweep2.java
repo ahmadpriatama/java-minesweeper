@@ -17,6 +17,7 @@ import java.util.Arrays;
 import javax.swing.Timer;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -32,6 +33,7 @@ public class MainSweep2 extends javax.swing.JFrame {
 
     private int[][] mine;
     private myJLabel[][] tombol;
+    private int[][] opened;
 
     public Icon iconUp;
     public Icon iconDown;
@@ -40,7 +42,7 @@ public class MainSweep2 extends javax.swing.JFrame {
     public MainSweep2() {
         initComponents();
 
-        createGame(9,9,10);
+        createGame(10,10,10);
 
         ButtonGroup group = new ButtonGroup();
         group.add(mnBeginner);
@@ -95,6 +97,9 @@ public class MainSweep2 extends javax.swing.JFrame {
         mnAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Minesweeper");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImages(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnToolbar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 4));
@@ -150,14 +155,14 @@ public class MainSweep2 extends javax.swing.JFrame {
         pnGame.setLayout(pnGameLayout);
         pnGameLayout.setHorizontalGroup(
             pnGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
         pnGameLayout.setVerticalGroup(
             pnGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 170, 190));
+        getContentPane().add(pnGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 160, 160));
 
         mnGame.setMnemonic('G');
         mnGame.setText("Game");
@@ -259,6 +264,7 @@ public class MainSweep2 extends javax.swing.JFrame {
 
     public void createGame(int m, int n, int nBomb){
         mine = new int[m][n];
+        opened = new int[m][n];
 
         // generate mine
         // 9 adalah bom yah
@@ -310,7 +316,11 @@ public class MainSweep2 extends javax.swing.JFrame {
             y += 16;
 //            System.out.println();
         }
+
+        pnGame.setSize(pnGame.getPreferredSize());
         pnGame.repaint();
+
+        MainSweep2.getFrames()[0].setSize(MainSweep2.getFrames()[0].getPreferredSize());
     }
 
     public void setDuration(){
@@ -347,6 +357,34 @@ public class MainSweep2 extends javax.swing.JFrame {
                 new MainSweep2().setVisible(true);
             }
         });
+    }
+
+    public void open(int x, int y) {
+        if (opened[y][x] == 1)
+            return;
+        else
+            opened[y][x] = 1;
+        if (mine[y][x] == 9) {
+            for (int i = 0; i < mine.length; i++){
+                for (int j = 0; j < mine[i].length; j++) {
+                    if (mine[i][j] == 9) tombol[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bomb.JPG")));
+                }
+            }
+        } else if (mine[y][x] != 0){
+            tombol[y][x].setIcon(null);
+            tombol[y][x].setText(""+mine[y][x]);
+        } else {
+            tombol[y][x].setIcon(null);
+            if (y > 0 && mine[y-1][x] == 0) open(x,y-1);
+            if (y < (m-1) && mine[y+1][x] == 0) open(x,y+1);
+            if (x > 0 && mine[y][x-1] == 0) open(x-1,y);
+            if (x < (mine[0].length-1) && mine[y][x+1] == 0) open(x+1,y);
+
+            if (y > 0 && x > 0 && mine[y-1][x-1] == 0) open(x-1,y-1);
+            if (y < (mine.length-1) && x > 0 && mine[y+1][x-1] == 0) open(x-1,y+1);
+            if (y > 0 && x < (mine[0].length-1) && mine[y-1][x+1] == 0) open(x+1,y-1);
+            if (y < (mine.length-1) && x < (mine[0].length-1) && mine[y+1][x+1] == 0) open(x+1,y+1);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

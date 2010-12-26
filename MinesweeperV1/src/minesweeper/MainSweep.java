@@ -179,7 +179,7 @@ public class MainSweep extends javax.swing.JFrame {
         pnToolbar.setPreferredSize(new java.awt.Dimension(400, 50));
 
         txtTimes.setBackground(new java.awt.Color(0, 0, 0));
-        txtTimes.setFont(new java.awt.Font("Digital-7", 1, 22)); // NOI18N
+        txtTimes.setFont(new java.awt.Font("Digital-7", 1, 22));
         txtTimes.setForeground(new java.awt.Color(255, 0, 0));
         txtTimes.setText("000");
 
@@ -194,7 +194,7 @@ public class MainSweep extends javax.swing.JFrame {
         });
 
         txtMines.setBackground(new java.awt.Color(0, 0, 0));
-        txtMines.setFont(new java.awt.Font("Digital-7", 1, 22)); // NOI18N
+        txtMines.setFont(new java.awt.Font("Digital-7", 1, 22));
         txtMines.setForeground(new java.awt.Color(255, 0, 0));
         txtMines.setText("010");
 
@@ -227,7 +227,10 @@ public class MainSweep extends javax.swing.JFrame {
         pnGame.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3)));
         pnGame.setLayout(new java.awt.GridLayout(9, 9));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/label1.png"))); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("1");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel2MousePressed(evt);
