@@ -13,6 +13,7 @@ package minesweeper;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.swing.Timer;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -34,10 +35,9 @@ public class MainSweep2 extends javax.swing.JFrame {
     
     /** Creates new form MainSweep2 */
     public MainSweep2() {
-
-        createGame(10,10,10);
-        
         initComponents();
+
+        createGame(9,9,10);
 
         ButtonGroup group = new ButtonGroup();
         group.add(mnBeginner);
@@ -275,16 +275,19 @@ public class MainSweep2 extends javax.swing.JFrame {
             int y;
             do {
                 y = (int) (m * Math.random());
-                x = (int) (m * Math.random());
+                x = (int) (n * Math.random());
             } while (mine[y][x] == 9);
             mine[y][x] = 9;
         }
 
         int x;
-        int y;
+        int y = 0;
         tombol = new myJLabel[m][n];
+        System.out.println(Arrays.asList(tombol));
+
 
         Icon icon = new javax.swing.ImageIcon(getClass().getResource("/img/label1.png"));
+        System.out.println(icon);
 
         for (int i = 0; i < m; i++) {
 
@@ -303,13 +306,18 @@ public class MainSweep2 extends javax.swing.JFrame {
                     if (i < (m-1) && j < (n-1) && mine[i+1][j+1] == 9) mine[i][j]++;
                 }
 
-//                tombol[i][j] = new myJLabel();
-//                tombol[i][j].setIcon(icon);
-//                pnGame.add(tombol[i][j]);
+                tombol[i][j] = new myJLabel();
+                tombol[i][j].setIcon(icon);
+                tombol[i][j].setSize(tombol[i][j].getPreferredSize());
+                tombol[i][j].setLocation(j * 16, y);
+                pnGame.add(tombol[i][j]);
 //                System.out.print(mine[i][j] + " ");
             }
+
+            y += 16;
 //            System.out.println();
         }
+        pnGame.repaint();
     }
 
     public void setDuration(){
