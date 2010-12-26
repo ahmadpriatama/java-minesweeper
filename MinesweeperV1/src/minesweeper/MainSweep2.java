@@ -32,6 +32,9 @@ public class MainSweep2 extends javax.swing.JFrame {
 
     private int[][] mine;
     private myJLabel[][] tombol;
+
+    public Icon iconUp;
+    public Icon iconDown;
     
     /** Creates new form MainSweep2 */
     public MainSweep2() {
@@ -92,6 +95,7 @@ public class MainSweep2 extends javax.swing.JFrame {
         mnAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnToolbar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 4));
         pnToolbar.setPreferredSize(new java.awt.Dimension(400, 50));
@@ -140,16 +144,20 @@ public class MainSweep2 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        getContentPane().add(pnToolbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 162, -1));
+
         javax.swing.GroupLayout pnGameLayout = new javax.swing.GroupLayout(pnGame);
         pnGame.setLayout(pnGameLayout);
         pnGameLayout.setHorizontalGroup(
             pnGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 162, Short.MAX_VALUE)
+            .addGap(0, 170, Short.MAX_VALUE)
         );
         pnGameLayout.setVerticalGroup(
             pnGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
+            .addGap(0, 190, Short.MAX_VALUE)
         );
+
+        getContentPane().add(pnGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 170, 190));
 
         mnGame.setMnemonic('G');
         mnGame.setText("Game");
@@ -226,22 +234,6 @@ public class MainSweep2 extends javax.swing.JFrame {
 
         setJMenuBar(mnBar);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -286,8 +278,9 @@ public class MainSweep2 extends javax.swing.JFrame {
         System.out.println(Arrays.asList(tombol));
 
 
-        Icon icon = new javax.swing.ImageIcon(getClass().getResource("/img/label1.png"));
-        System.out.println(icon);
+        iconUp = new javax.swing.ImageIcon(getClass().getResource("/img/label1.png"));
+        iconDown = new javax.swing.ImageIcon(getClass().getResource("/img/label2.png"));
+        System.out.println(iconUp);
 
         for (int i = 0; i < m; i++) {
 
@@ -306,8 +299,8 @@ public class MainSweep2 extends javax.swing.JFrame {
                     if (i < (m-1) && j < (n-1) && mine[i+1][j+1] == 9) mine[i][j]++;
                 }
 
-                tombol[i][j] = new myJLabel();
-                tombol[i][j].setIcon(icon);
+                tombol[i][j] = new myJLabel(this, j, i);
+                tombol[i][j].setIcon(iconUp);
                 tombol[i][j].setSize(tombol[i][j].getPreferredSize());
                 tombol[i][j].setLocation(j * 16, y);
                 pnGame.add(tombol[i][j]);
